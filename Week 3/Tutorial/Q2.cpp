@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 #include <iomanip>
 
 /**
@@ -16,10 +15,10 @@ int main(){
     std::string month[3];
     double totalRainfall = 0.0;
 
-    for (int i = 1; i <= 3; i++){
+    for (int i = 0; i < 3; i++){
         double rainfall = 0.0;
         std::cout << "Please enter the name of the month: ";
-        std::cin >> month[i-1];
+        std::cin >> month[i];
         std::cout << "Please enter the amount of rain fell (in inches): ";
         std::cin >> rainfall;
 
@@ -29,7 +28,7 @@ int main(){
 
     averageRainfall = totalRainfall / 3;
 
-    std::cout << "The average rainfall for " << month[0] << ", " << month[1] << " and " << month[2] << " is " << std::fixed << std::setprecision(2) << averageRainfall << " inches.";
+    std::cout << "The average rainfall for " << month[0] << ", " << month[1] << " and " << month[2] << " is " << std::fixed << std::showpoint << std::setprecision(2) << averageRainfall << " inches.";
 
     return 0;
 }

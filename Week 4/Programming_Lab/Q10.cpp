@@ -23,14 +23,29 @@ int main(){
         std::cin >> travelSeconds;
     }
 
-    if(gasSelection == 1){
-        travelMeters = travelSeconds * 258.0;
-    }else if(gasSelection == 2){
-        travelMeters = travelSeconds * 331.5;
-    }else if(gasSelection == 3){
-        travelMeters = travelSeconds * 972.0;
-    }else if(gasSelection == 4){
-        travelMeters = travelSeconds * 1270.0;
+    // if(gasSelection == 1){
+    //     travelMeters = travelSeconds * 258.0;
+    // }else if(gasSelection == 2){
+    //     travelMeters = travelSeconds * 331.5;
+    // }else if(gasSelection == 3){
+    //     travelMeters = travelSeconds * 972.0;
+    // }else if(gasSelection == 4){
+    //     travelMeters = travelSeconds * 1270.0;
+    // }
+
+    switch(gasSelection){
+        case 1:
+            travelMeters = travelSeconds * 258.0;
+            break;
+        case 2:
+            travelMeters = travelSeconds * 331.5;
+            break;
+        case 3:
+            travelMeters = travelSeconds * 972.0;
+            break;
+        case 4:
+            travelMeters = travelSeconds * 1270.0;   
+            break;
     }
 
     std::cout << "Distance(meters) : " << travelMeters << " meters";

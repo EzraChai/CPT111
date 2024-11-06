@@ -2,7 +2,7 @@
 
 int main(){
 
-    std::string primaryColor1,primaryColor2;
+    std::string primaryColor1,primaryColor2, secondaryColor;
 
     std::cout << "First primary color (red, blue, yellow): ";
     std::getline(std::cin, primaryColor1);
@@ -12,37 +12,41 @@ int main(){
 
     if(primaryColor1 == "red"){
         if(primaryColor2 == "red"){
-            std::cout << "Secondary color: " << "red";
+            secondaryColor = "red";
         }else if(primaryColor2 == "blue"){
-            std::cout << "Secondary color: " << "purple";
+            secondaryColor = "purple";
         }else if(primaryColor2 == "yellow"){
-            std::cout << "Secondary color: " << "orange";
+            secondaryColor = "orange";
         }else {
             std::cout << "Not a valid color. Please try again later.";
+            return 0;
         }
     }else if(primaryColor1 == "blue"){
         if(primaryColor2 == "red"){
-            std::cout << "Secondary color: " << "purple";
+            secondaryColor = "purple";
         }else if(primaryColor2 == "blue"){
-            std::cout << "Secondary color: " << "blue";
+            secondaryColor = "blue";
         }else if(primaryColor2 == "yellow"){
-            std::cout << "Secondary color: " << "green";
+            secondaryColor = "green";
         }else {
             std::cout << "Not a valid color. Please try again later.";
+            return 0;
         }
     }else if(primaryColor1 == "yellow"){
         if(primaryColor2 == "red"){
-            std::cout << "Secondary color: " << "orange";
+            secondaryColor = "orange";
         }else if(primaryColor2 == "blue"){
-            std::cout << "Secondary color: " << "green";
+            secondaryColor = "green";
         }else if(primaryColor2 == "yellow"){
-            std::cout << "Secondary color: " << "yellow";
+            secondaryColor = "yellow";
         }else {
             std::cout << "Not a valid color. Please try again later.";
+            return 0;
         }
     }else {
         std::cout << "Not a valid color. Please try again later.";
     }
+    std::cout << "Secondary color: " << secondaryColor;
 
     return 0; 
 }

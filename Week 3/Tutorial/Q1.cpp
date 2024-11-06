@@ -14,11 +14,18 @@
      */
 int main(){
 
+    const int COOKIES_PER_BAG = 30;
+    const int CALORIES_PER_BAG = 300;
+    const int SERVINGS_PER_BAG = 10;
+
     int cookiesAte = 0;
     std::cout << "How many cookies have you ate? ";
     std::cin >> cookiesAte;
 
-    int totalCalories = static_cast<double> (cookiesAte) / 3 * 30;
+    int cookiesPerServing = COOKIES_PER_BAG / SERVINGS_PER_BAG;
+    int caloriesPerServing = CALORIES_PER_BAG / SERVINGS_PER_BAG;
+
+    int totalCalories = static_cast<double> (cookiesAte) / cookiesPerServing * caloriesPerServing;
 
     std::cout << "You have gained " << totalCalories << " calories by eating " << cookiesAte << " cookies.\n";
 

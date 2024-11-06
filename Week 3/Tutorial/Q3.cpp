@@ -12,11 +12,13 @@
 
     Example: 950522050274
     29 years old
+
+    Example: 050225050267
 */
 
 int main(){
 
-    unsigned long IC;
+    long long IC;
     int age, year;
 
     std::cout << "Please enter your IC number: ";
@@ -25,7 +27,13 @@ int main(){
     year = 1900 + IC / 1e10 ;
     age = 2024 - year;
 
-    std::cout << "You are "<< age << " years old. \n";
+    // int y = IC / 1e4;
+
+    // int x = IC / 1e6 ;
+    // int location = y % (x * 100);
+    // std::cout << location;
+
+    std::cout << "You are " << age << " years old.\n";
 
     return 0;
 }

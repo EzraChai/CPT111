@@ -14,7 +14,7 @@ int main(){
 
     std::cout << " " << std::setw(4) << randomNum1 << "\n";
     std::cout << "+" << std::setw(4) << randomNum2 << "\n";
-    std::cout << "------" << "\n\n";
+    std::cout << "-----" << "\n\n";
     std::cout << "What's the answer? ";
     std::cin >> userAns;
 
