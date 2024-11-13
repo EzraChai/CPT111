@@ -37,7 +37,7 @@ int main(){
     int i = 1;
     while(value < num){
         value = first + (i - 1) * dif;
-        if(value > num){
+        if(value >= num){
             break;
         }
         ++i;
