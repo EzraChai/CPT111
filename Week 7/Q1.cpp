@@ -32,5 +32,7 @@ int main(){
         ++line_number;
     }
 
+    file.close();
+
     return 0;
 }
