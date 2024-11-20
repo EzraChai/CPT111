@@ -20,7 +20,7 @@ int main(){
     file.open(nameOfFile);
 
     if(file.fail()){
-        std::cout << "The file is nor exists.";
+        std::cout << "Error: The file is not exists.";
     }
 
     int line_number = 1;

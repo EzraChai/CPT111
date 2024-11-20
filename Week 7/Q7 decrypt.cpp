@@ -15,8 +15,7 @@ int main(){
     }
 
     char ch;
-    while(!ifile.eof()){
-        ifile.get(ch);
+    while(ifile.get(ch)){
         ofile.put(ch - 12);
     }
 
