@@ -1,8 +1,7 @@
 #include <iostream>
 
 int funcpos(int x, int y, int k){
-    int area = x * y;
-
+    
     int i = k;
     if(k>1){
         --i;
@@ -16,7 +15,7 @@ int funcpos(int x, int y, int k){
                 break;
             } 
         }
-        i--;
+        --i;
     }
 
 
@@ -50,8 +49,8 @@ int funcpos(int x, int y, int k){
 int main(){
 
     int x, y, k;
-    x = 4;
-    y = 4;
+    x = 9;
+    y = 9;
     k = 9;
 
     int count = funcpos(x,y,k);
