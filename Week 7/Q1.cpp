@@ -18,6 +18,10 @@ int main(){
 
 
     if(num != 2){
+        if(num == 1){
+            isPrimeNumber = false;
+        }
+        
         if(num % 2 == 0){
             isPrimeNumber = false;
         }else {
