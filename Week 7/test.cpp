@@ -14,5 +14,14 @@ int main(){
       std::cout << "This will always print.\n";
   }
   std::cout << x << y << z;
+
+  x = 10;
+  if(x++ > 10)
+    std::cout << "\nx is greater than 10";
+
+    do{
+      std::cout << "Hello";
+      x--;
+    } while(x > 10);
   return 0;
 }

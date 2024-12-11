@@ -16,7 +16,6 @@ int main(){
     cout << "Please enter a positive integer: ";
     cin >> num;
 
-
     if(num != 2){
         if(num == 1){
             isPrimeNumber = false;
