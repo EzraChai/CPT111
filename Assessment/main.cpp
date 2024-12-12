@@ -7,6 +7,7 @@ int printMenu();
 void printBookRating();
 void printBookRatingBasedOnBookId();
 void printBookRatingBasedOnUsername();
+void addReview();
 
 int main()
 {
@@ -36,29 +37,92 @@ int main()
 
 void printBookRating()
 {
-    fstream ratingFile;
-    ratingFile.open("ratings.file", ios::in);
-    cout << "\n\n";
+    fstream averageRatingFile;
+    averageRatingFile.open("average_ratings.file", ios::in);
 
-    if (ratingFile)
+    fstream bookFile;
+    bookFile.open("books.file", ios::in);
+
+    cout << "\n";
+    if (averageRatingFile && bookFile)
     {
+        cout << "+-------------------------------------------+\n";
+        cout << "|                    Books                  |\n";
+        cout << "+-------------------------------------------+\n\n";
         string text = "";
-        cout << "+-------------------------------------------+\n";
-        cout << "|                Books Review               |\n";
-        cout << "+-------------------------------------------+\n";
+        getline(averageRatingFile, text);
+        cout << "------------------------------------------------------------------------------------------------------------------------\n";
+        cout << "Book ID" << "\t" << "Book Title" << "\t\t\t\t\t\t" << "Number of Ratings" << "\t" << "Average Rating" << "\t" << "Goodreads Rating\n";
+        cout << "------------------------------------------------------------------------------------------------------------------------\n";
 
-        while (getline(ratingFile, text))
+        while (averageRatingFile)
         {
-            cout << text << "\n";
+            string bookRatingId;
+            averageRatingFile >> bookRatingId;
+
+            while (bookFile)
+            {
+                string bookId;
+                bookFile >> bookId;
+                string bookTitle;
+                bookFile.seekg(6L, ios::cur);
+                getline(bookFile, bookTitle);
+                if (bookRatingId == bookId)
+                {
+                    cout << bookId << "\t" << bookTitle;
+                    if (bookTitle.length() > 48)
+                    {
+                        cout << "\t";
+                    }
+                    else if (bookTitle.length() > 40)
+                    {
+                        cout << "\t\t";
+                    }
+                    else if (bookTitle.length() > 32)
+                    {
+                        cout << "\t\t\t";
+                    }
+                    else if (bookTitle.length() > 24)
+                    {
+                        cout << "\t\t\t\t";
+                    }
+                    else if (bookTitle.length() > 16)
+                    {
+                        cout << "\t\t\t\t\t";
+                    }
+                    else if (bookTitle.length() > 8)
+                    {
+                        cout << "\t\t\t\t\t\t";
+                    }
+                    else
+                    {
+                        cout << "\t\t\t\t\t\t\t";
+                    }
+                    bookFile.seekg(0L, ios::beg);
+                    break;
+                }
+            }
+            string numOfRatings;
+            averageRatingFile >> numOfRatings;
+            string averageRating;
+            averageRatingFile >> averageRating;
+            string goodReadsRating;
+            averageRatingFile >> goodReadsRating;
+
+            cout << numOfRatings << "\t\t\t" << averageRating << "\t\t" << goodReadsRating << "\n";
+            numOfRatings = "";
+            averageRating = "";
+            goodReadsRating = "";
         }
     }
     else
     {
-        cout << "Error opening the ratings file.\n";
+        cout << "Error opening the average ratings file.\n";
     }
     cout << "\n\n";
 
-    ratingFile.close();
+    averageRatingFile.close();
+    bookFile.close();
 }
 
 void printBookRatingBasedOnBookId()
@@ -68,6 +132,9 @@ void printBookRatingBasedOnBookId()
 
     fstream ratingFile;
     ratingFile.open("ratings.file", ios::in);
+
+    fstream averageRatingsFile;
+    averageRatingsFile.open("average_ratings.file", ios::in);
 
     cout << "=============================================\n";
 
@@ -79,9 +146,10 @@ void printBookRatingBasedOnBookId()
     {
         bool bookExist = false;
         string bookTitle = "";
+        string bookId;
+
         while (bookFile)
         {
-            string bookId;
             bookFile >> bookId;
             bookFile.seekg(6L, ios::cur);
             string bookName;
@@ -96,16 +164,45 @@ void printBookRatingBasedOnBookId()
 
         if (bookExist == true)
         {
+            cout << "\n+-------------------------------------------+\n";
+            cout << "|                Book Reviews               |\n";
+            cout << "+-------------------------------------------+\n";
             cout << "\nBook's title: " << bookTitle << "\n";
+
+            if (averageRatingsFile)
+            {
+                string text = "";
+                getline(averageRatingsFile, text);
+                while (averageRatingsFile)
+                {
+                    string averageRatingsBookId;
+                    averageRatingsFile >> averageRatingsBookId;
+                    // Number of Ratings Average Rating Goodreads Rating
+                    string numOfRatings;
+                    averageRatingsFile >> numOfRatings;
+                    string averageRating;
+                    averageRatingsFile >> averageRating;
+                    string goodreadsRating;
+                    averageRatingsFile >> goodreadsRating;
+
+                    if (bookId == averageRatingsBookId)
+                    {
+                        cout << "Average Ratings: " << averageRating << "\n";
+                        cout << "Number of Ratings: " << numOfRatings << "\n";
+                        cout << "Goodreads Rating: " << goodreadsRating << "\n";
+                    }
+                }
+            }
 
             if (ratingFile)
             {
                 string text = "";
                 int reviewCount = 0;
-                cout << "+-------------------------------------------+\n";
-                cout << "|                Book Reviews               |\n";
-                cout << "+-------------------------------------------+\n";
+
+                cout << "------------------------------------------------------------\n";
                 cout << "Username" << "\t" << "Rating" << "\t" << "Comments\n";
+                cout << "------------------------------------------------------------\n";
+
                 while (ratingFile)
                 {
                     string bookId;
@@ -119,7 +216,7 @@ void printBookRatingBasedOnBookId()
                     getline(ratingFile, comment);
                     if (bookId == userBookId)
                     {
-                        if (username.length() > 8)
+                        if (username.length() >= 8)
                         {
                             cout << username << "\t";
                         }
@@ -176,17 +273,21 @@ void printBookRatingBasedOnUsername()
 
         if (userNameExist == true)
         {
-            cout << "\nReviews written by " << userEnteredUsername << "\n";
+            cout << "\n+-------------------------------------------+\n";
+            cout << "|                Book Reviews               |\n";
+            cout << "+-------------------------------------------+\n";
+            cout << "Reviews written by " << userEnteredUsername << "\n\n";
 
             if (ratingFile)
             {
                 ratingFile.seekg(0L, ios::beg);
                 string text = "";
                 int reviewCount = 0;
-                cout << "+-------------------------------------------+\n";
-                cout << "|                Book Reviews               |\n";
-                cout << "+-------------------------------------------+\n";
-                cout << "Book ID" << "\t\t" << "Rating" << "\t" << "Comments\n";
+
+                cout << "------------------------------------------------------\n";
+                cout << "Book ID" << "\t" << "Rating" << "\t" << "Comments\n";
+                cout << "------------------------------------------------------\n";
+
                 while (ratingFile)
                 {
                     string bookId;
@@ -201,14 +302,14 @@ void printBookRatingBasedOnUsername()
                     if (userEnteredUsername == username)
                     {
 
-                        cout << bookId << "\t\t" << rating << "\t" << comment << " \n";
+                        cout << bookId << "\t" << rating << "\t" << comment << " \n";
                     }
                 }
             }
         }
         else
         {
-            cout << "\nOpps! Username not found.\n";
+            cout << "\nOpps! User with the username [" << userEnteredUsername << "] is not found.\n";
         }
         cout << "\n\n";
     }
@@ -221,7 +322,7 @@ int printMenu()
     cout << "=============================================\n";
     cout << "             Books Rating System\n";
     cout << "=============================================\n";
-    cout << "1 - Read all books reviews\n";
+    cout << "1 - Read all books ratings\n";
     cout << "2 - Read reviews based on book's ID\n";
     cout << "3 - Read reviews based on reviewer's username\n";
     cout << "4 - \n";
@@ -236,7 +337,7 @@ int printMenu()
         cout << "=============================================\n";
         cout << "             Books Rating System\n";
         cout << "=============================================\n";
-        cout << "1 - Read all books reviews\n";
+        cout << "1 - Read all books ratings\n";
         cout << "2 - Read reviews based on book's ID\n";
         cout << "3 - Read reviews based on reviewer's username\n";
         cout << "4 - \n";
