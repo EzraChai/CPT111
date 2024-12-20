@@ -51,8 +51,6 @@ void addReview()
 
     if (bookFile)
     {
-        string text;
-        getline(bookFile, text);
         cout << "\n------------------------------------\n";
         cout << "Book ID\tBook Title\n";
         cout << "------------------------------------\n";
@@ -61,10 +59,12 @@ void addReview()
         {
             string bookId;
             bookFile >> bookId;
-            bookFile.seekg(6L, ios::cur);
+            bookFile.seekg(1L, ios::cur);
             string bookTitle;
             getline(bookFile, bookTitle);
             cout << bookId << "\t" << bookTitle << "\n";
+            bookTitle = "";
+            bookId = "";
         }
         string userBookId;
         cout << "Please enter the book ID: ";
@@ -79,11 +79,12 @@ void addReview()
         {
             string bookId;
             bookFile >> bookId;
-            bookFile.seekg(6L, ios::cur);
+            bookFile.seekg(1L, ios::cur);
             getline(bookFile, bookTitle);
             if (bookId == userBookId)
             {
                 isExist = true;
+                break;
             }
         }
         while (isExist == false)
@@ -93,8 +94,6 @@ void addReview()
 
             bookFile.clear();
             bookFile.seekg(0L, ios::beg);
-            string text;
-            getline(bookFile, text);
             cout << "\n------------------------------------\n";
             cout << "Book ID\tBook Title\n";
             cout << "------------------------------------\n";
@@ -103,9 +102,11 @@ void addReview()
             {
                 string bookId;
                 bookFile >> bookId;
-                bookFile.seekg(6L, ios::cur);
+                bookFile.seekg(1L, ios::cur);
                 getline(bookFile, bookTitle);
                 cout << bookId << "\t" << bookTitle << "\n";
+                bookTitle = "";
+                bookId = "";
             }
 
             string userBookId;
@@ -118,11 +119,12 @@ void addReview()
             {
                 string bookId;
                 bookFile >> bookId;
-                bookFile.seekg(6L, ios::cur);
+                bookFile.seekg(1L, ios::cur);
                 getline(bookFile, bookTitle);
                 if (bookId == userBookId)
                 {
                     isExist = true;
+                    break;
                 }
             }
         }
@@ -148,36 +150,34 @@ void addReview()
         ratingsFile.open("ratings.file", ios::app);
 
         ratingsFile << "\n"
-                    << userBookId << "\t\t" << username;
-
-        if (username.length() <= 8)
-        {
-            ratingsFile << "\t\t";
-        }
-        else if (username.length() <= 12)
-        {
-            ratingsFile << "\t";
-        }
-
-        ratingsFile << rating << "       " << review;
+                    << userBookId << "\t" << username << "\t" << rating << "\t"
+                    << review;
         ratingsFile.close();
 
         fstream averageRatingsFile;
 
-        averageRatingsFile.open("average_ratings.file", ios::app | ios::in);
+        averageRatingsFile.open("average_ratings.file", ios::in | ios::app);
 
         if (averageRatingsFile)
         {
-            string text;
-            getline(averageRatingsFile, text);
             while (averageRatingsFile)
             {
                 string id;
                 averageRatingsFile >> id;
+
                 int numOfRatings;
                 averageRatingsFile >> numOfRatings;
+
                 int averageRating;
+                averageRatingsFile >> averageRating;
+
                 int goodreadsRating;
+                averageRatingsFile >> goodreadsRating;
+
+                if (id == userBookId)
+                {
+                    cout << id << " " << numOfRatings << " " << averageRating << " " << goodreadsRating << endl;
+                }
             }
         }
         else
@@ -211,8 +211,6 @@ void printBookRating()
         cout << "+-------------------------------------------+\n";
         cout << "|                    Books                  |\n";
         cout << "+-------------------------------------------+\n\n";
-        string text = "";
-        getline(averageRatingFile, text);
         cout << "------------------------------------------------------------------------------------------------------------------------\n";
         cout << "Book ID" << "\t" << "Book Title" << "\t\t\t\t\t\t" << "Number of Ratings" << "\t" << "Average Rating" << "\t" << "Goodreads Rating\n";
         cout << "------------------------------------------------------------------------------------------------------------------------\n";
@@ -227,7 +225,7 @@ void printBookRating()
                 string bookId;
                 bookFile >> bookId;
                 string bookTitle;
-                bookFile.seekg(6L, ios::cur);
+                bookFile.seekg(1L, ios::cur);
                 getline(bookFile, bookTitle);
                 if (bookRatingId == bookId)
                 {
@@ -313,7 +311,7 @@ void printBookRatingBasedOnBookId()
         while (bookFile)
         {
             bookFile >> bookId;
-            bookFile.seekg(6L, ios::cur);
+            bookFile.seekg(1L, ios::cur);
             string bookName;
             getline(bookFile, bookName);
             if (userBookId == bookId)
@@ -333,8 +331,6 @@ void printBookRatingBasedOnBookId()
 
             if (averageRatingsFile)
             {
-                string text = "";
-                getline(averageRatingsFile, text);
                 while (averageRatingsFile)
                 {
                     string averageRatingsBookId;
@@ -373,7 +369,7 @@ void printBookRatingBasedOnBookId()
                     ratingFile >> username;
                     string rating;
                     ratingFile >> rating;
-                    ratingFile.seekg(7L, ios::cur);
+                    ratingFile.seekg(1L, ios::cur);
                     string comment;
                     getline(ratingFile, comment);
                     if (bookId == userBookId)
@@ -423,7 +419,7 @@ void printBookRatingBasedOnUsername()
             ratingFile >> username;
             string rating;
             ratingFile >> rating;
-            ratingFile.seekg(7L, ios::cur);
+            ratingFile.seekg(1L, ios::cur);
             string comment;
             getline(ratingFile, comment);
             if (userEnteredUsername == username)
@@ -458,7 +454,7 @@ void printBookRatingBasedOnUsername()
                     ratingFile >> username;
                     string rating;
                     ratingFile >> rating;
-                    ratingFile.seekg(7L, ios::cur);
+                    ratingFile.seekg(1L, ios::cur);
                     string comment;
                     getline(ratingFile, comment);
                     if (userEnteredUsername == username)

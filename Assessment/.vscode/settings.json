@@ -28,6 +28,8 @@
     "*.js": "javascriptreact",
     "*.ts": "typescript",
     "*.blade.php": "blade",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "iosfwd": "cpp",
+    "ostream": "cpp"
   }
 }
