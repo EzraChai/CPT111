@@ -155,10 +155,12 @@ void addReview()
         ratingsFile.close();
 
         fstream averageRatingsFile;
+        fstream bufferFile;
 
-        averageRatingsFile.open("average_ratings.file", ios::in | ios::app);
+        averageRatingsFile.open("average_ratings.file", ios::in);
+        bufferFile.open("buffer.file", ios::out);
 
-        if (averageRatingsFile)
+        if (averageRatingsFile && bufferFile)
         {
             while (averageRatingsFile)
             {
@@ -167,18 +169,46 @@ void addReview()
 
                 int numOfRatings;
                 averageRatingsFile >> numOfRatings;
+                numOfRatings;
+                if (id == userBookId)
+                {
+                    numOfRatings++;
+                }
 
-                int averageRating;
+                double averageRating;
                 averageRatingsFile >> averageRating;
+                if (id == userBookId)
+                {
+                    averageRating = (averageRating * numOfRatings + rating) / static_cast<double>(numOfRatings);
+                }
 
                 int goodreadsRating;
                 averageRatingsFile >> goodreadsRating;
 
-                if (id == userBookId)
+                if (id != "")
                 {
-                    cout << id << " " << numOfRatings << " " << averageRating << " " << goodreadsRating << endl;
+                    int intOfAverageRating = averageRating;
+                    if (intOfAverageRating != averageRating)
+                    {
+                        bufferFile << id << "\t" << numOfRatings << "\t" << fixed << setprecision(2) << averageRating << "\t" << goodreadsRating << endl;
+                    }
+                    else
+                    {
+                        bufferFile << id << "\t" << numOfRatings << "\t" << fixed << setprecision(0) << averageRating << "\t" << goodreadsRating << endl;
+                    }
                 }
             }
+            bufferFile.close();
+            averageRatingsFile.close();
+            bufferFile.open("buffer.file", ios::in);
+            averageRatingsFile.open("average_ratings.file", ios::out);
+            string line = "";
+            while (getline(bufferFile, line))
+            {
+                averageRatingsFile << line << endl;
+            }
+            bufferFile.close();
+            averageRatingsFile.close();
         }
         else
         {
@@ -434,7 +464,7 @@ void printBookRatingBasedOnUsername()
             cout << "\n+-------------------------------------------+\n";
             cout << "|                Book Reviews               |\n";
             cout << "+-------------------------------------------+\n";
-            cout << "Reviews written by " << userEnteredUsername << "\n\n";
+            cout << "Reviews written by [" << userEnteredUsername << "]\n\n";
 
             if (ratingFile)
             {
