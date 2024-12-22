@@ -35,6 +35,7 @@ int main()
             addReview(username);
             break;
         case 0:
+            cout << "\nBye, " << username << "!\n\n";
             return 0;
         }
     }
@@ -420,6 +421,7 @@ void printBookRatingBasedOnBookId()
         else
         {
             cout << "\nOpps! Book ID not found.\n";
+            cout << "Please try again.\n\n";
         }
         cout << "\n\n";
     }
@@ -506,7 +508,7 @@ void printBookRatingBasedOnUsername()
 
 int printMenu()
 {
-    int choice = -1;
+    string choice;
     cout << "=============================================\n";
     cout << "             Books Rating System\n";
     cout << "=============================================\n";
@@ -518,7 +520,7 @@ int printMenu()
     cout << "Please enter your choice [0-4]: ";
     cin >> choice;
 
-    while (choice < 0 || choice > 4)
+    while (choice != "0" && choice != "1" && choice != "2" && choice != "3" && choice != "4")
     {
         cout << "\nPlease enter only [0-4].\n";
         cout << "Please try again.\n\n";
@@ -533,6 +535,5 @@ int printMenu()
         cout << "Please enter your choice [0-4]: ";
         cin >> choice;
     }
-
-    return choice;
+    return stoi(choice);
 }
