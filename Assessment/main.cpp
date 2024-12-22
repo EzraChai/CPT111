@@ -7,12 +7,16 @@ int printMenu();
 void printBookRating();
 void printBookRatingBasedOnBookId();
 void printBookRatingBasedOnUsername();
-void addReview();
+void addReview(string);
 
 int main()
 {
     int userChoice = -1;
     string bookId = "";
+    string username;
+    cout << "Please enter your username: ";
+    cin >> username;
+    cout << "Hello, " << username << "!\n\n";
     while (true)
     {
         userChoice = printMenu();
@@ -28,7 +32,7 @@ int main()
             printBookRatingBasedOnUsername();
             break;
         case 4:
-            addReview();
+            addReview(username);
             break;
         case 0:
             return 0;
@@ -38,13 +42,9 @@ int main()
     return 0;
 }
 
-void addReview()
+void addReview(string username)
 {
     cout << "=============================================\n";
-
-    string username;
-    cout << "What's your username? ";
-    cin >> username;
 
     fstream bookFile;
     bookFile.open("books.file", ios::in);
@@ -375,8 +375,8 @@ void printBookRatingBasedOnBookId()
 
                     if (bookId == averageRatingsBookId)
                     {
-                        cout << "Average Ratings: " << averageRating << "\n";
                         cout << "Number of Ratings: " << numOfRatings << "\n";
+                        cout << "Average Ratings: " << averageRating << "\n";
                         cout << "Goodreads Rating: " << goodreadsRating << "\n";
                     }
                 }
