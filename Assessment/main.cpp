@@ -91,6 +91,7 @@ void addReview(string username)
             getline(bookFile, bookTitle);
             if (bookId == userBookId)
             {
+                userBookId = bookId;
                 isExist = true; // Book found
                 break;
             }
@@ -118,7 +119,6 @@ void addReview(string username)
                 bookId = "";
             }
 
-            string userBookId;
             // Prompt user to select a book by ID again
             cout << "Please enter the book ID: ";
             cin >> userBookId;
@@ -133,6 +133,7 @@ void addReview(string username)
                 getline(bookFile, bookTitle);
                 if (bookId == userBookId)
                 {
+                    userBookId = bookId;
                     isExist = true; // Book found
                     break;
                 }
