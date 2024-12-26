@@ -14,12 +14,14 @@ int main()
     int userChoice = -1;
     string bookId = "";
     string username;
+
+    // Prompt user for their username
     cout << "Please enter your username: ";
     cin >> username;
     cout << "Hello, " << username << "!\n\n";
     while (true)
     {
-        userChoice = printMenu();
+        userChoice = printMenu(); // Display menu and get user's choice
         switch (userChoice)
         {
         case 1:
@@ -43,6 +45,7 @@ int main()
     return 0;
 }
 
+// Function to add a new review to the system
 void addReview(string username)
 {
     cout << "=============================================\n";
@@ -56,6 +59,7 @@ void addReview(string username)
         cout << "Book ID\tBook Title\n";
         cout << "------------------------------------\n";
 
+        //  Print available books
         while (bookFile)
         {
             string bookId;
@@ -67,10 +71,13 @@ void addReview(string username)
             bookTitle = "";
             bookId = "";
         }
+
         string userBookId;
+        // Prompt user to select a book by ID
         cout << "Please enter the book ID: ";
         cin >> userBookId;
 
+        // Reset the file to check if the book ID exists
         bookFile.clear();
         bookFile.seekg(0L, ios::beg);
         bool isExist = false;
@@ -84,11 +91,12 @@ void addReview(string username)
             getline(bookFile, bookTitle);
             if (bookId == userBookId)
             {
-                isExist = true;
+                isExist = true; // Book found
                 break;
             }
         }
-        while (isExist == false)
+        // If book ID does not exist, prompt user again
+        while (!isExist)
         {
             cout << "Opps. Book is not found.\n";
             cout << "Please try again.\n";
@@ -111,6 +119,7 @@ void addReview(string username)
             }
 
             string userBookId;
+            // Prompt user to select a book by ID again
             cout << "Please enter the book ID: ";
             cin >> userBookId;
 
@@ -124,12 +133,13 @@ void addReview(string username)
                 getline(bookFile, bookTitle);
                 if (bookId == userBookId)
                 {
-                    isExist = true;
+                    isExist = true; // Book found
                     break;
                 }
             }
         }
         bookFile.close();
+        // Prompt user for rating and review
         string review;
         cout << "\nBook Title: " << bookTitle << endl;
 
@@ -150,6 +160,7 @@ void addReview(string username)
         fstream ratingsFile;
         ratingsFile.open("ratings.file", ios::app);
 
+        // Add review to the ratings file
         ratingsFile << "\n"
                     << userBookId << "\t" << username << "\t" << rating << "\t"
                     << review;
@@ -158,6 +169,10 @@ void addReview(string username)
         fstream averageRatingsFile;
         fstream bufferFile;
 
+        /*
+         Create a buffer file and write on the file with changed data.
+         Buffer file is then copy and paste to the original file.
+        */
         averageRatingsFile.open("average_ratings.file", ios::in);
         bufferFile.open("buffer.file", ios::out);
 
@@ -228,6 +243,7 @@ void addReview(string username)
     bookFile.close();
 }
 
+// Displays all books and their ratings in a table
 void printBookRating()
 {
     fstream averageRatingFile;
@@ -261,6 +277,7 @@ void printBookRating()
                 if (bookRatingId == bookId)
                 {
                     cout << bookId << "\t" << bookTitle;
+                    //  Let the table display neatly
                     if (bookTitle.length() > 48)
                     {
                         cout << "\t";
@@ -316,6 +333,7 @@ void printBookRating()
     bookFile.close();
 }
 
+// Displays ratings and reviews for a specific book based on its ID
 void printBookRatingBasedOnBookId()
 {
     fstream bookFile;
@@ -330,6 +348,7 @@ void printBookRatingBasedOnBookId()
     cout << "=============================================\n";
 
     string userBookId;
+    // Prompt user to select a book by ID
     cout << "What's the book ID? ";
     cin >> userBookId;
 
@@ -347,7 +366,7 @@ void printBookRatingBasedOnBookId()
             getline(bookFile, bookName);
             if (userBookId == bookId)
             {
-                bookExist = true;
+                bookExist = true; // Book found
                 bookTitle = bookName;
                 break;
             }
@@ -366,7 +385,6 @@ void printBookRatingBasedOnBookId()
                 {
                     string averageRatingsBookId;
                     averageRatingsFile >> averageRatingsBookId;
-                    // Number of Ratings Average Rating Goodreads Rating
                     string numOfRatings;
                     averageRatingsFile >> numOfRatings;
                     string averageRating;
@@ -421,7 +439,7 @@ void printBookRatingBasedOnBookId()
         else
         {
             cout << "\nOpps! Book ID not found.\n";
-            cout << "Please try again.\n\n";
+            cout << "Please try again.\n";
         }
         cout << "\n\n";
     }
@@ -429,6 +447,7 @@ void printBookRatingBasedOnBookId()
     bookFile.close();
 }
 
+// Displays all reviews written by a specific username
 void printBookRatingBasedOnUsername()
 {
     fstream ratingFile;
@@ -437,6 +456,8 @@ void printBookRatingBasedOnUsername()
     cout << "=============================================\n";
 
     string userEnteredUsername;
+
+    //  Prompt user to enter the others username
     cout << "What's the username? ";
     cin >> userEnteredUsername;
 
@@ -448,6 +469,7 @@ void printBookRatingBasedOnUsername()
             string bookId;
             ratingFile >> bookId;
             string username;
+
             ratingFile >> username;
             string rating;
             ratingFile >> rating;
@@ -456,7 +478,7 @@ void printBookRatingBasedOnUsername()
             getline(ratingFile, comment);
             if (userEnteredUsername == username)
             {
-                userNameExist = true;
+                userNameExist = true; // Username found
                 break;
             }
         }
@@ -506,6 +528,7 @@ void printBookRatingBasedOnUsername()
     ratingFile.close();
 }
 
+// Display menu and input validation
 int printMenu()
 {
     string choice;
