@@ -8,6 +8,7 @@ void printBookRating();
 void printBookRatingBasedOnBookId();
 void printBookRatingBasedOnUsername();
 void addReview(string);
+void addNewBook();
 
 int main()
 {
@@ -36,6 +37,9 @@ int main()
         case 4:
             addReview(username);
             break;
+        case 5:
+            addNewBook();
+            break;
         case 0:
             cout << "\nBye, " << username << "!\n\n";
             return 0;
@@ -43,6 +47,97 @@ int main()
     }
 
     return 0;
+}
+
+void addNewBook()
+{
+    cout << "=============================================\n";
+
+    fstream bookFile;
+    bookFile.open("books.file", ios::in);
+
+    if (bookFile)
+    {
+
+        bool bookIdExisted = false;
+        string bookId;
+        //  Prompt user to enter new book ID
+        cout << "New book ID: ";
+        cin >> bookId;
+
+        cin.ignore();
+
+        // Check whether the book ID has duplicate or not
+        while (bookFile)
+        {
+            string currentBookId;
+            bookFile >> currentBookId;
+            string currentBookTitle;
+            getline(bookFile, currentBookTitle);
+            if (currentBookId == bookId)
+            {
+                cout << "Opps! Book ID [" << bookId << "] already existed.\n\n";
+                bookIdExisted = true;
+                bookId = "";
+                break;
+            }
+        }
+        while (bookIdExisted)
+        {
+            bookFile.seekg(0L, ios::beg);
+            bookIdExisted = false;
+            //  Prompt user to enter new book ID
+            cout << "New book ID: ";
+            cin >> bookId;
+
+            cin.ignore();
+
+            while (bookFile)
+            {
+                string currentBookId;
+                bookFile >> currentBookId;
+                string currentBookTitle;
+                getline(bookFile, currentBookTitle);
+                if (currentBookId == bookId)
+                {
+                    cout << "Opps! Book ID [" << bookId << "] already existed.\n\n";
+                    bookIdExisted = true;
+                    break;
+                }
+            }
+        }
+        bookFile.close();
+        bookFile.open("books.file", ios::app);
+
+        string bookTitle;
+        //  Prompt user to enter new book Title
+        cout << "New book Title: ";
+        getline(cin, bookTitle);
+
+        bookFile << "\n"
+                 << bookId << "\t" << bookTitle;
+
+        bookFile.close();
+
+        int goodreadsRating;
+        //  Prompt user to enter new book's Goodreads rating
+        cout << "Goodreads rating: ";
+        cin >> goodreadsRating;
+
+        fstream averageRatingsFile;
+        averageRatingsFile.open("average_ratings.file", ios::app);
+
+        averageRatingsFile << "\n"
+                           << bookId << "\t" << 0 << "\t" << 0 << "\t" << goodreadsRating;
+
+        averageRatingsFile.close();
+        cout << "\nNew book added.\n";
+    }
+    else
+    {
+        cout << "Error opening the books file.\n";
+    }
+    cout << "\n\n";
 }
 
 // Function to add a new review to the system
@@ -540,11 +635,12 @@ int printMenu()
     cout << "2 - Read reviews based on book's ID\n";
     cout << "3 - Read reviews based on reviewer's username\n";
     cout << "4 - Add new review\n";
+    cout << "5 - Add new book\n";
     cout << "0 - Quit the program\n\n";
-    cout << "Please enter your choice [0-4]: ";
+    cout << "Please enter your choice [0-5]: ";
     cin >> choice;
 
-    while (choice != "0" && choice != "1" && choice != "2" && choice != "3" && choice != "4")
+    while (choice != "0" && choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5")
     {
         cout << "\nPlease enter only [0-4].\n";
         cout << "Please try again.\n\n";
@@ -555,8 +651,9 @@ int printMenu()
         cout << "2 - Read reviews based on book's ID\n";
         cout << "3 - Read reviews based on reviewer's username\n";
         cout << "4 - Add new review\n";
+        cout << "5 - Add new book\n";
         cout << "0 - Quit the program\n\n";
-        cout << "Please enter your choice [0-4]: ";
+        cout << "Please enter your choice [0-5]: ";
         cin >> choice;
     }
     return stoi(choice);
