@@ -49,6 +49,7 @@ int main()
     return 0;
 }
 
+// Function to add a new book
 void addNewBook()
 {
     cout << "=============================================\n";
@@ -140,7 +141,7 @@ void addNewBook()
     cout << "\n\n";
 }
 
-// Function to add a new review to the system
+// Function to add a new review
 void addReview(string username)
 {
     cout << "=============================================\n";
