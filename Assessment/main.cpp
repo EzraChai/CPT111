@@ -9,6 +9,7 @@ void printBookRatingBasedOnBookId();
 void printBookRatingBasedOnUsername();
 void addReview(string);
 void addNewBook();
+void printBooks();
 
 int main()
 {
@@ -71,15 +72,14 @@ void addNewBook()
         // Check whether the book ID has duplicate or not
         while (bookFile)
         {
-            string currentBookId;
-            bookFile >> currentBookId;
-            string currentBookTitle;
-            getline(bookFile, currentBookTitle);
-            if (currentBookId == bookId)
+            string bookLine[2];
+            bookFile >> bookLine[0];
+            getline(bookFile, bookLine[1]);
+            if (bookLine[0] == bookId)
             {
-                cout << "Opps! Book ID [" << bookId << "] already existed.\n\n";
+                cout << "Opps! Book ID [" << bookLine[0] << "] already existed.\n\n";
                 bookIdExisted = true;
-                bookId = "";
+                bookLine[0] = "";
                 break;
             }
         }
@@ -95,14 +95,14 @@ void addNewBook()
 
             while (bookFile)
             {
-                string currentBookId;
-                bookFile >> currentBookId;
-                string currentBookTitle;
-                getline(bookFile, currentBookTitle);
-                if (currentBookId == bookId)
+                string bookLine[2];
+                bookFile >> bookLine[0];
+                getline(bookFile, bookLine[1]);
+                if (bookLine[0] == bookId)
                 {
-                    cout << "Opps! Book ID [" << bookId << "] already existed.\n\n";
+                    cout << "Opps! Book ID [" << bookLine[0] << "] already existed.\n\n";
                     bookIdExisted = true;
+                    bookLine[0] = "";
                     break;
                 }
             }
@@ -151,22 +151,9 @@ void addReview(string username)
 
     if (bookFile)
     {
-        cout << "\n------------------------------------\n";
-        cout << "Book ID\tBook Title\n";
-        cout << "------------------------------------\n";
 
-        //  Print available books
-        while (bookFile)
-        {
-            string bookId;
-            bookFile >> bookId;
-            bookFile.seekg(1L, ios::cur);
-            string bookTitle;
-            getline(bookFile, bookTitle);
-            cout << bookId << "\t" << bookTitle << "\n";
-            bookTitle = "";
-            bookId = "";
-        }
+        // Print Books
+        printBooks();
 
         string userBookId;
         // Prompt user to select a book by ID
@@ -181,13 +168,14 @@ void addReview(string username)
 
         while (bookFile)
         {
-            string bookId;
-            bookFile >> bookId;
+            string bookLine[2];
+            bookFile >> bookLine[0];
             bookFile.seekg(1L, ios::cur);
-            getline(bookFile, bookTitle);
-            if (bookId == userBookId)
+            getline(bookFile, bookLine[1]);
+            if (bookLine[0] == userBookId)
             {
-                userBookId = bookId;
+                userBookId = bookLine[0];
+                bookTitle = bookLine[1];
                 isExist = true; // Book found
                 break;
             }
@@ -223,13 +211,14 @@ void addReview(string username)
             bookFile.seekg(0L, ios::beg);
             while (bookFile)
             {
-                string bookId;
-                bookFile >> bookId;
+                string bookLine[2];
+                bookFile >> bookLine[0];
                 bookFile.seekg(1L, ios::cur);
-                getline(bookFile, bookTitle);
-                if (bookId == userBookId)
+                getline(bookFile, bookLine[1]);
+                if (bookLine[0] == userBookId)
                 {
-                    userBookId = bookId;
+                    userBookId = bookLine[0];
+                    bookTitle = bookLine[1];
                     isExist = true; // Book found
                     break;
                 }
@@ -366,36 +355,35 @@ void printBookRating()
 
             while (bookFile)
             {
-                string bookId;
-                bookFile >> bookId;
-                string bookTitle;
+                string bookLine[2];
+                bookFile >> bookLine[0];
                 bookFile.seekg(1L, ios::cur);
-                getline(bookFile, bookTitle);
-                if (bookRatingId == bookId)
+                getline(bookFile, bookLine[1]);
+                if (bookRatingId == bookLine[0])
                 {
-                    cout << bookId << "\t" << bookTitle;
+                    cout << bookLine[0] << "\t" << bookLine[1];
                     //  Let the table display neatly
-                    if (bookTitle.length() > 48)
+                    if (bookLine[1].length() > 48)
                     {
                         cout << "\t";
                     }
-                    else if (bookTitle.length() > 40)
+                    else if (bookLine[1].length() > 40)
                     {
                         cout << "\t\t";
                     }
-                    else if (bookTitle.length() > 32)
+                    else if (bookLine[1].length() > 32)
                     {
                         cout << "\t\t\t";
                     }
-                    else if (bookTitle.length() > 24)
+                    else if (bookLine[1].length() > 24)
                     {
                         cout << "\t\t\t\t";
                     }
-                    else if (bookTitle.length() > 16)
+                    else if (bookLine[1].length() > 16)
                     {
                         cout << "\t\t\t\t\t";
                     }
-                    else if (bookTitle.length() > 8)
+                    else if (bookLine[1].length() > 8)
                     {
                         cout << "\t\t\t\t\t\t";
                     }
@@ -430,6 +418,38 @@ void printBookRating()
     bookFile.close();
 }
 
+// Print available books with ID and title
+void printBooks()
+{
+    fstream bookFile;
+    bookFile.open("books.file", ios::in);
+    if (bookFile)
+    {
+
+        cout << "\n------------------------------------\n";
+        cout << "Book ID\tBook Title\n";
+        cout << "------------------------------------\n";
+
+        //  Print available books
+        while (bookFile)
+        {
+            string bookLine[2];
+            bookFile >> bookLine[0];
+            bookFile.seekg(1L, ios::cur);
+            getline(bookFile, bookLine[1]);
+            cout << bookLine[0] << "\t" << bookLine[1] << "\n";
+            bookLine[0] = "";
+            bookLine[1] = "";
+        }
+
+        bookFile.close();
+    }
+    else
+    {
+        cout << "Error opening the books file.\n";
+    }
+}
+
 // Displays ratings and reviews for a specific book based on its ID
 void printBookRatingBasedOnBookId()
 {
@@ -443,6 +463,8 @@ void printBookRatingBasedOnBookId()
     averageRatingsFile.open("average_ratings.file", ios::in);
 
     cout << "=============================================\n";
+
+    printBooks();
 
     string userBookId;
     // Prompt user to select a book by ID
@@ -628,7 +650,7 @@ void printBookRatingBasedOnUsername()
 // Display menu and input validation
 int printMenu()
 {
-    string choice;
+    int choice;
     cout << "=============================================\n";
     cout << "             Books Rating System\n";
     cout << "=============================================\n";
@@ -641,9 +663,9 @@ int printMenu()
     cout << "Please enter your choice [0-5]: ";
     cin >> choice;
 
-    while (choice != "0" && choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5")
+    while (choice < 0 || choice > 5)
     {
-        cout << "\nPlease enter only [0-4].\n";
+        cout << "\nPlease enter only [0-5].\n";
         cout << "Please try again.\n\n";
         cout << "=============================================\n";
         cout << "             Books Rating System\n";
@@ -657,5 +679,5 @@ int printMenu()
         cout << "Please enter your choice [0-5]: ";
         cin >> choice;
     }
-    return stoi(choice);
+    return choice;
 }
