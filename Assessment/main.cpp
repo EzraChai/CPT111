@@ -120,7 +120,7 @@ void addNewBook()
 
         bookFile.close();
 
-        int goodreadsRating;
+        double goodreadsRating;
         //  Prompt user to enter new book's Goodreads rating
         cout << "Goodreads rating: ";
         cin >> goodreadsRating;
@@ -156,7 +156,7 @@ void addReview(string username)
         printBooks();
 
         string userBookId;
-        // Prompt user to select a book by ID
+        // Prompt user to enter a book ID
         cout << "Please enter the book ID: ";
         cin >> userBookId;
 
@@ -186,22 +186,7 @@ void addReview(string username)
             cout << "Opps. Book is not found.\n";
             cout << "Please try again.\n";
 
-            bookFile.clear();
-            bookFile.seekg(0L, ios::beg);
-            cout << "\n------------------------------------\n";
-            cout << "Book ID\tBook Title\n";
-            cout << "------------------------------------\n";
-
-            while (bookFile)
-            {
-                string bookId;
-                bookFile >> bookId;
-                bookFile.seekg(1L, ios::cur);
-                getline(bookFile, bookTitle);
-                cout << bookId << "\t" << bookTitle << "\n";
-                bookTitle = "";
-                bookId = "";
-            }
+            printBooks();
 
             // Prompt user to select a book by ID again
             cout << "Please enter the book ID: ";
@@ -245,13 +230,15 @@ void addReview(string username)
 
         fstream ratingsFile;
         ratingsFile.open("ratings.file", ios::app);
+        if (ratingsFile)
+        {
 
-        // Add review to the ratings file
-        ratingsFile << "\n"
-                    << userBookId << "\t" << username << "\t" << rating << "\t"
-                    << review;
-        ratingsFile.close();
-
+            // Add review to the ratings file
+            ratingsFile << "\n"
+                        << userBookId << "\t" << username << "\t" << rating << "\t"
+                        << review;
+            ratingsFile.close();
+        }
         fstream averageRatingsFile;
         fstream bufferFile;
 
@@ -284,7 +271,7 @@ void addReview(string username)
                     averageRating = (averageRating * numOfRatings + rating) / static_cast<double>(numOfRatings);
                 }
 
-                int goodreadsRating;
+                double goodreadsRating;
                 averageRatingsFile >> goodreadsRating;
 
                 if (id != "")
@@ -310,7 +297,7 @@ void addReview(string username)
                 averageRatingsFile << line << endl;
             }
             bufferFile.close();
-            averageRatingsFile.close();
+            averageRatingsFile.close(); 
         }
         else
         {
@@ -362,28 +349,29 @@ void printBookRating()
                 if (bookRatingId == bookLine[0])
                 {
                     cout << bookLine[0] << "\t" << bookLine[1];
+
                     //  Let the table display neatly
-                    if (bookLine[1].length() > 48)
+                    if (bookLine[1].length() >= 48)
                     {
                         cout << "\t";
                     }
-                    else if (bookLine[1].length() > 40)
+                    else if (bookLine[1].length() >= 40)
                     {
                         cout << "\t\t";
                     }
-                    else if (bookLine[1].length() > 32)
+                    else if (bookLine[1].length() >= 32)
                     {
                         cout << "\t\t\t";
                     }
-                    else if (bookLine[1].length() > 24)
+                    else if (bookLine[1].length() >= 24)
                     {
                         cout << "\t\t\t\t";
                     }
-                    else if (bookLine[1].length() > 16)
+                    else if (bookLine[1].length() >= 16)
                     {
                         cout << "\t\t\t\t\t";
                     }
-                    else if (bookLine[1].length() > 8)
+                    else if (bookLine[1].length() >= 8)
                     {
                         cout << "\t\t\t\t\t\t";
                     }
@@ -410,7 +398,7 @@ void printBookRating()
     }
     else
     {
-        cout << "Error opening the average ratings file.\n";
+        cout << "Error opening the average ratings file or books file.\n";
     }
     cout << "\n\n";
 
@@ -642,9 +630,13 @@ void printBookRatingBasedOnUsername()
         {
             cout << "\nOpps! User with the username [" << userEnteredUsername << "] is not found.\n";
         }
-        cout << "\n\n";
+        ratingFile.close();
     }
-    ratingFile.close();
+    else
+    {
+        cout << "Error opening the ratings file.\n";
+    }
+    cout << "\n\n";
 }
 
 // Display menu and input validation
