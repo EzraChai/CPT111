@@ -556,6 +556,9 @@
         <mxCell id="RY2o8DAdaYbEbruQnpAb-106" value="&lt;div&gt;Open buffer.file in input mode and average_ratings.file in output mode&lt;br&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="313.19" y="3840" width="244.24" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="RY2o8DAdaYbEbruQnpAb-108" value="&lt;div&gt;Open buffer.file in input mode and average_ratings.file in output mode&lt;br&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="498" y="3760" width="244.24" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
