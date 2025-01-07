@@ -23,7 +23,7 @@ int main()
     cout << "Hello, " << username << "!\n\n";
     while (true)
     {
-        userChoice = printMenu(); // Display menu and get user's choice
+        userChoice = printMenu(); // Display menu and get the user's choice
         switch (userChoice)
         {
         case 1:
@@ -50,7 +50,7 @@ int main()
     return 0;
 }
 
-// Function to add a new book
+// Function to add a new book and entering details such as Book ID and Title
 void addNewBook()
 {
     cout << "=============================================\n";
@@ -128,6 +128,7 @@ void addNewBook()
         fstream averageRatingsFile;
         averageRatingsFile.open("average_ratings.file", ios::app);
 
+        // Write the initial data into the average ratings file
         averageRatingsFile << "\n"
                            << bookId << "\t" << 0 << "\t" << 0 << "\t" << goodreadsRating;
 
@@ -141,7 +142,7 @@ void addNewBook()
     cout << "\n\n";
 }
 
-// Function to add a new review
+// Function to add a new review, username is passed into the function
 void addReview(string username)
 {
     cout << "=============================================\n";
@@ -210,6 +211,7 @@ void addReview(string username)
             }
         }
         bookFile.close();
+
         // Prompt user for rating and review
         string review;
         cout << "\nBook Title: " << bookTitle << endl;
@@ -217,6 +219,8 @@ void addReview(string username)
         int rating;
         cout << "Please rate the book: [1-5] ";
         cin >> rating;
+
+        //  If user entered an invalid rating, the program will repeatedly prompt user to enter a valid rating
         while (rating > 5 || rating < 1)
         {
             cout << "1 - 5 only.\n";
@@ -232,7 +236,6 @@ void addReview(string username)
         ratingsFile.open("ratings.file", ios::app);
         if (ratingsFile)
         {
-
             // Add review to the ratings file
             ratingsFile << "\n"
                         << userBookId << "\t" << username << "\t" << rating << "\t"
@@ -268,6 +271,7 @@ void addReview(string username)
                 averageRatingsFile >> averageRating;
                 if (id == userBookId)
                 {
+                    // calculate the average rating
                     averageRating = (averageRating * numOfRatings + rating) / static_cast<double>(numOfRatings);
                 }
 
@@ -292,6 +296,8 @@ void addReview(string username)
             bufferFile.open("buffer.file", ios::in);
             averageRatingsFile.open("average_ratings.file", ios::out);
             string line = "";
+
+            //  write file from buffer file back to average ratings file
             while (getline(bufferFile, line))
             {
                 averageRatingsFile << line << endl;
@@ -479,6 +485,7 @@ void printBookRatingBasedOnBookId()
             }
         }
 
+        //  Book ID entered by the user is found
         if (bookExist == true)
         {
             cout << "\n+-------------------------------------------+\n";
@@ -517,6 +524,7 @@ void printBookRatingBasedOnBookId()
                 cout << "Username" << "\t" << "Rating" << "\t" << "Comments\n";
                 cout << "------------------------------------------------------------\n";
 
+                //  Print out username, rating and comments based on the Book ID
                 while (ratingFile)
                 {
                     string bookId;
@@ -590,6 +598,7 @@ void printBookRatingBasedOnUsername()
             }
         }
 
+        //  Username entered by the user is found
         if (userNameExist == true)
         {
             cout << "\n+-------------------------------------------+\n";
@@ -607,6 +616,7 @@ void printBookRatingBasedOnUsername()
                 cout << "Book ID" << "\t" << "Rating" << "\t" << "Comments\n";
                 cout << "------------------------------------------------------\n";
 
+                //  Print out book ID, rating and comments based on reviews written by the user entered username
                 while (ratingFile)
                 {
                     string bookId;
@@ -655,6 +665,7 @@ int printMenu()
     cout << "Please enter your choice [0-5]: ";
     cin >> choice;
 
+    //  Choice must be [0 - 5].
     while (choice < 0 || choice > 5)
     {
         cout << "\nInvalid choice.\n";
