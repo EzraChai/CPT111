@@ -297,7 +297,7 @@ void addReview(string username)
                 averageRatingsFile << line << endl;
             }
             bufferFile.close();
-            averageRatingsFile.close(); 
+            averageRatingsFile.close();
         }
         else
         {
@@ -657,7 +657,7 @@ int printMenu()
 
     while (choice < 0 || choice > 5)
     {
-        cout << "\nPlease enter only [0-5].\n";
+        cout << "\nInvalid choice.\n";
         cout << "Please try again.\n\n";
         cout << "=============================================\n";
         cout << "             Books Rating System\n";
@@ -671,5 +671,6 @@ int printMenu()
         cout << "Please enter your choice [0-5]: ";
         cin >> choice;
     }
+
     return choice;
 }
