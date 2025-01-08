@@ -1,0 +1,1 @@
+cout << sales[5][3] << endl;
