@@ -1,3 +1,8 @@
+/*
+Develop a C++ program that lets the user enter 10 values into an array. The program should then display
+the largest and smallest values stored in the array. Please process the array content using both normal
+for loop and range-based for loop.
+ */
 #include <iostream>
 
 using namespace std;
