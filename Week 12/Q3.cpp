@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 
-    const int SIZE = 5;
+    const int SIZE = 10;
     int arr[SIZE];
 
     int largestEvenNumber = -999999;
@@ -19,6 +19,9 @@ int main()
     {
         cin >> val;
     }
+
+    cout << "\n\n";
+
     for (int val : arr)
     {
         cout << val << " ";
@@ -40,5 +43,18 @@ int main()
             }
         }
     }
-    cout << largestEvenNumber << " " << secondLargestEvenNumber;
+    if (largestEvenNumber == -999999)
+    {
+        cout << "No even numbers found";
+    }
+    else if (secondLargestEvenNumber == -999999)
+    {
+        cout << "Largest Even Number: " << largestEvenNumber << "\n";
+        cout << "Second Largest Even Number: Not found" << endl;
+    }
+    else
+    {
+        cout << "Largest Even Number: " << largestEvenNumber << endl;
+        cout << "Second Largest Even Number: " << secondLargestEvenNumber << endl;
+    }
 }
