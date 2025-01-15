@@ -5,11 +5,11 @@ using namespace std;
 int main() {
     int x = 10, y = 20;
     const int* ptr1 = &x;   ptr1 -> x
-    ERROR *ptr1 = 15;             
+    // ERROR *ptr1 = 15;             
     ptr1 = &y;              ptr1 -> y
     int* const ptr2 = &x;   ptr2 -> x
     *ptr2 = 15;             *ptr2 = 15
-    ERROR ptr2 = &y;
+    // ERROR ptr2 = &y;
     cout << "Pointer to constant: " << *ptr1 << endl;
     cout << "Constant pointer: " << *ptr2 << endl;
     return 0;
