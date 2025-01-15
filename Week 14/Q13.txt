@@ -1,0 +1,5 @@
+ Fill in the blank to declare a constant pointer to constant data.
+int a = 5;
+____ int* const p = &a;
+
+ANS: const

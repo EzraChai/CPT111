@@ -1,0 +1,10 @@
+Given the following array definition.
+
+int numbers[] = {2, 4, 6, 8, 10};
+
+Show what the following statement will display.
+
+cout << *(numbers + 3) << endl;
+
+OUTPUT:
+8

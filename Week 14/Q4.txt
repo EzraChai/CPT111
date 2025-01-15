@@ -1,0 +1,8 @@
+int x = 10;
+int *ptr = &x;
+*ptr ++;
+cout << *ptr;
+
+When apply indirection operator to ptr, we are working with the item that ptr points to.
+So, it will add 1 to the contents of x;
+It will then print out the value of the x which is 11.

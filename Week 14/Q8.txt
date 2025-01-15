@@ -1,0 +1,8 @@
+Assume pint is a pointer variable. State whether each of the following statements valid or invalid. If any is
+invalid, explain the reason.
+A) pint++;      valid
+B) −−pint;      valid
+C) pint /= 2;   invalid
+D) pint *= 4;   invalid
+E) pint += x; // Assume x is an int.        valid
+

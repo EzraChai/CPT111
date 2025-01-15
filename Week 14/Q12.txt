@@ -1,0 +1,20 @@
+12. What is the output of the following program?
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 10, y = 20;
+    const int* ptr1 = &x;   ptr1 -> x
+    *ptr1 = 15;             *ptr1 = 10
+    ptr1 = &y;              *ptr1 = 20
+    int* const ptr2 = &x;   *ptr2 = 10
+    *ptr2 = 15;             *ptr2 = 15
+    ptr2 = &y;
+    cout << "Pointer to constant: " << *ptr1 << endl;
+    cout << "Constant pointer: " << *ptr2 << endl;
+    return 0;
+}
+
+OUTPUT:
+Pointer to constant: 20
+Constant pointer: 15

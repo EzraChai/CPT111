@@ -1,0 +1,11 @@
+Modify the following loop so it uses pointer notation (with the indirection operator) instead of subscript
+notation.
+
+for (int x = 0; x < 100; x++)
+    cout << arr[x] << endl;
+
+
+
+ptr = arr;
+for (int x = 0; x < 100; x++)
+    cout << *(ptr+x) << endl;

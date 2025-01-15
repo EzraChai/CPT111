@@ -1,0 +1,13 @@
+9. State whether each of the following definitions is valid or invalid. If any of them are invalid, explain the reason.
+
+A) int ivar;                        
+int *iptr = &ivar;                  valid
+
+B) int ivar, *iptr = &ivar;         valid
+
+C) float fvar; int *iptr = &fvar;   invalid, because an integer pointer can only point to integer variables.
+
+D) int nums[50], *iptr = nums;      valid
+
+E) int *iptr = &ivar;               
+int ivar;                           invalid, because ivar is declare after it is being used which is wrong.
