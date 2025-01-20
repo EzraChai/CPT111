@@ -6,7 +6,7 @@ int main()
 {
 
     const int size = 7;
-    int arr[size] = {1, 2, 2, 6, 2, 6, 7};
+    int arr[size] = {1, 2, 3, 4, 5, 6, 7};
 
     int unique = unique_array(arr, size);
     std::cout << unique;
@@ -16,6 +16,5 @@ int main()
 
 int unique_array(int arr[], int size)
 {
-
    
 }
