@@ -28,6 +28,7 @@
     "*.js": "javascriptreact",
     "*.ts": "typescript",
     "*.blade.php": "blade",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ostream": "cpp"
   }
 }
