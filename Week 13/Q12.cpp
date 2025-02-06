@@ -40,9 +40,9 @@ int *findMax(int arr[][5], int rows, int cols)
             if (arr[j][i] > max)
             {
                 max = arr[j][i];
-                arrPtr[i] = max;
             }
         }
+        arrPtr[i] = max;
     }
 
     return arrPtr;
